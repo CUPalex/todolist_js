@@ -118,3 +118,32 @@ input {
   float: right;
   margin: 0px 48px 0px 0px;
 }
+
+.edit-button {
+  display: block;
+  float: right;
+  margin: 0px 48px 0px 0px;
+}
+
+li input {
+  display: none;
+}
+
+li input {
+  line-height: 18px;
+  height: 18px;
+  width: 50%;
+}
+li label {
+  display: inline-block;
+  text-overflow: ellipsis;
+  font-size: 18px;
+  width: 50%;
+}
+
+li.editMode label {
+  display : none;
+}
+li.editMode input {
+  display: block;
+}

@@ -20,9 +20,12 @@ for (i = 0; i < close.length; i++) {
 }
 
 // Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
+var list = document.getElementById('myTODO');
 list.addEventListener('click', function(ev) {
   let clickedNode = ev.target;
+  if (clickedNode.tagName === 'LABEL') {
+    clickedNode = clickedNode.parentNode;
+  }
   if (clickedNode.tagName === 'LI') {
     clickedNode.classList.toggle('checked');
     let completedList = document.getElementById("myCompleted");
@@ -33,19 +36,37 @@ list.addEventListener('click', function(ev) {
   }
 }, false);
 
+
 // Create a new list item when clicking on the "Add" button
 function newElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("myInput").value;
 
-  var t = document.createTextNode(inputValue);
-  li.append(t);
+  var label = document.createElement("label");
+  label.innerHTML = inputValue;
+  li.append(label);
+  var input = document.createElement("input");
+  li.append(input);
+  li.querySelector("input").setAttribute("type", "text");
 
   var time = new Date();
   var timeStr = time.getDate() + "." + (time.getMonth() + 1);
-  t.after(document.createElement("span"));
+  li.append(document.createElement("span"));
   li.querySelector("span").innerHTML = timeStr;
   li.querySelector("span").className = "date";
+
+  var editButton = document.createElement("button");
+  editButton.innerHTML = "Edit";
+  editButton.className = "edit-button";
+  editButton.onclick = (ev) => {
+    if(li.classList.contains("editMode")){
+      label.innerText = input.value;
+    } else {
+      input.value = label.innerText;
+    }
+    li.classList.toggle("editMode");
+  }
+  li.append(editButton);
 
   if (inputValue === '') {
     alert("You must write something!");
